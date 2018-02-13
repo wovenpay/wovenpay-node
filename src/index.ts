@@ -5,11 +5,13 @@ export default class WovenPay {
     this.url = url
   }
 
-  async getAuthToken(email: string, password: string) {
-    let authToken = await fetch(this.url, {
+  getAuthToken(email: string, password: string) {
+    return fetch(this.url + '/authorize/', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({ email: email, password: password })
-    }).catch(e => { return e })
-    return authToken
+    })
   }
 }
