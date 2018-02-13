@@ -1,6 +1,6 @@
 let url
 
-const initWovenPay = (url) => {
+const initWovenPay = (url: string) => {
   this.url = url
   return this
 }
