@@ -1,15 +1,15 @@
-let url
+export default class WovenPay {
+  private url: string
 
-const initWovenPay = (url: string) => {
-  this.url = url
-  return this
+  constructor(url: string) {
+    this.url = url
+  }
+
+  async getAuthToken(email: string, password: string) {
+    let authToken = await fetch(this.url, {
+      method: 'POST',
+      body: JSON.stringify({ email: email, password: password })
+    }).catch(e => { return e })
+    return authToken
+  }
 }
-
-const getAuthToken = (email, password) => {
-  return fetch(this.url, {
-    method: 'POST',
-    body: JSON.stringify({ email: email, password: password })
-  })
-}
-
-export { initWovenPay, getAuthToken }
