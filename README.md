@@ -3,25 +3,9 @@
 # USAGE
 
 ## Install
-(Not available on npm yet)
-```
+
+```cmd
 npm i -S woven-pay-js
-```
-
-## Guide
-
-### 1. Initialize the client
-
-```js
-import WovenPay from 'woven-pay-js'
-
-let wovenPay = new WovenPay(process.env.REACT_APP_URL)
-```
-
-### 2. Authentication
-
-```js
-let authToken = wovenPay.getAuthToken(process.env.REACT_APP_SAMPLE_EMAIL, process.env.REACT_APP_SAMPLE_PASSWORD)
 ```
 
 ## API
@@ -29,3 +13,25 @@ let authToken = wovenPay.getAuthToken(process.env.REACT_APP_SAMPLE_EMAIL, proces
 ### 1. new WovenPay(url: string)
 
 ### 2. getAuthToken(merchantEmail: string, merchantPassword: string)
+
+### 3. refreshAuthToken(token: string)
+
+### 4. setAuthToken(authToken: string)
+
+### 5. verifyAuthToken(token: string)
+
+### 6. chargePayment(methodOfPayment: string, amount: number, mobile: string, customerEmail: string, orderDescription: string, reference: string)
+
+### 7. checkPaymentStatus(transactionId: string)
+
+### 8. createWebhook(event: string, target: string, key: string)
+
+### 9. deleteWebhook(webhookId: string)
+
+### 10. createPlan(name: string, price: number, business: string)
+
+### 11. editPlanName(planId: string, name: string)
+
+### 12. editPlan(planId: string, name: string, price: number, business: string)
+
+### 13. deletePlan(planId: string)
