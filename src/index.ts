@@ -1,9 +1,15 @@
 export default class WovenPay {
   private url: string
   private authToken: string
+  private apikey: string
+  private apisecret: string
+  private pubkey: string
 
-  constructor(url: string) {
+  constructor(url: string, apikey: string, apisecret: string, pubkey: string) {
     this.url = url
+    this.apikey = apikey
+    this.apisecret = apisecret
+    this.pubkey = pubkey
   }
 
   getAuthToken(email: string, password: string) {
@@ -16,6 +22,26 @@ export default class WovenPay {
     })
   }
 
+  refreshAuthToken(token: string) {
+    return fetch(this.url + '/token/actions/refresh/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ token: token })
+    })
+  }
+
+  verifyAuthToken(token: string) {
+    return fetch(this.url + '/token/actions/verify/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ token: token })
+    })
+  }
+
   setAuthToken(authToken: string) {
     this.authToken = authToken
   }
@@ -24,7 +50,8 @@ export default class WovenPay {
     return fetch(this.url + '/payments/actions/charge', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'XPAY': `${this.apikey}:${this.apisecret}`,
       },
       body: JSON.stringify(
         {
