@@ -8,7 +8,7 @@
 npm i -S woven-pay-js
 ```
 
-## API
+## AVAILABE METHODS
 
 ### 1. new WovenPay(url: string)
 

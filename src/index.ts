@@ -80,6 +80,15 @@ export default class WovenPay {
     })
   }
 
+  listPaymentTransaction(event: string, target: string, key: string) {
+    return fetch(this.url + `/payments/`, {
+      method: 'GET',
+      headers: {
+        'XPAY': `${this.apikey}:${this.apisecret}`
+      }
+    })
+  }
+
   createWebhook(event: string, target: string, key: string) {
     return fetch(this.url + `/webhooks/`, {
       method: 'POST',
