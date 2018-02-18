@@ -1,3 +1,10 @@
+function isArray(object: any){
+  if(Array.isArray){
+    return Array.isArray(object);
+  }
+  return Object.prototype.toString.call(object) === '[object Array]';
+}
+
 export default class WovenPay {
   private url: string
   private authToken: string
@@ -130,7 +137,7 @@ export default class WovenPay {
   }
 
   editPlanName(planId: string, name: string) {
-    return fetch(`${this.url}/plans/${planId}`, {
+    return fetch(`${this.url}/plans/${planId}/`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -143,7 +150,7 @@ export default class WovenPay {
   }
 
   editPlan(planId: string, name: string, price: number, business: string) {
-    return fetch(`${this.url}/plans/${planId}`, {
+    return fetch(`${this.url}/plans/${planId}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -164,6 +171,24 @@ export default class WovenPay {
         'Content-Type': 'application/json',
         'Authorization': `Token ${this.authToken}`
       }
+    })
+  }
+
+  query(graphQuery: string) {
+    /*
+    Sends POST request to the GraphQl endpoint with given query as body.
+    @param graphQuery - GraphQl query
+    */
+    let gQuery: string = isArray(graphQuery) && graphQuery[0] || graphQuery;
+    return fetch(`${this.url}/graphql/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${this.authToken}`
+      },
+      body: JSON.stringify({
+        'query': gQuery
+      })
     })
   }
 }

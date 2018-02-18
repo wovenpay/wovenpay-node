@@ -1,9 +1,10 @@
 {
   "name": "woven-pay-js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Js SDK for the Woven Payment REST api",
   "main": "built/index.js",
   "scripts": {
+    "build": "tsc && uglifyjs built/index.js -o built/index.js",
     "test": "tsc && mocha tests --recursive --watch --compilers js:babel-core/register --require tests/init.js"
   },
   "author": "thatmarc_ <mark@wovenpay.com> (http://www.markmakuno.com/)",
@@ -11,10 +12,10 @@
   "dependencies": {},
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "chai": "^4.1.2",
+    "babel-preset-es2015": "^6.24.1",        
+    "chai": "^4.1.2",        
     "isomorphic-fetch": "^2.2.1",
     "mocha": "^5.0.1",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0"    
   }
 }
