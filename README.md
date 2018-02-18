@@ -37,3 +37,5 @@ npm i -S woven-pay-js
 ### 12. editPlan(planId: string, name: string, price: number, business: string)
 
 ### 13. deletePlan(planId: string)
+
+### 14. query(graphQuery: string) or query`graphQuery: string literals`
