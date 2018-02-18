@@ -177,6 +177,11 @@ export default class WovenPay {
   query(graphQuery: string) {
     /*
     Sends POST request to the GraphQl endpoint with given query as body.
+    Allow bot string literal and primitive string argument
+    Eg:
+      wovenpay.query`{ allCustomers {edge{node{ id }}} }`      
+      wovenpay.query("{ allCustomers {edge{node{ id }}} }")
+
     @param graphQuery - GraphQl query
     */
     let gQuery: string = isArray(graphQuery) && graphQuery[0] || graphQuery;
