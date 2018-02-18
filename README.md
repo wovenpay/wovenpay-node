@@ -38,4 +38,4 @@ npm i -S woven-pay-js
 
 ### 13. deletePlan(planId: string)
 
-### 14. query(graphQuery: string) or query\`graphQuery: string literals\`
+### 14. query(graphQuery: string) or query\`graphQuery: template literals\`
