@@ -3,5 +3,6 @@ pipelines:
   default:
     - step:
         script:
+          - npm install -g typescript
           - npm install
           - npm test
