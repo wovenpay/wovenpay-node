@@ -1,5 +1,5 @@
 image: node:6.9.4
-pipelines:
+pipelines: 
   default:
     - step:
         script:
