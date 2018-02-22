@@ -26,6 +26,11 @@ npm i -S woven-pay-js
   - Payment disburse
   - Payment disburse
 
+## Create a new Instance of wovenpay
+```javaScript
+import wovenpay from 'woven-pay-js';
+let woven = new wovenpay(url, apikey, apisecret);
+```
 
 ## Customer
 ##### To Create a new customer
