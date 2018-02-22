@@ -11,20 +11,20 @@ npm i -S woven-pay-js
 ```
 
 ### SUPPORTED RESOURCES
-  -Customers
-  -Payments
-  -Plans
-  -Webhooks
-  -Payments
+  - Customers
+  - Payments
+  - Plans
+  - Webhooks
+  - Payments
 
 ### To Be Added  
-  -Account Resource [GET and PUT only]
-  -Business Resource [GET and PUT only]
-  -Subscriptions Resource
-  -Payment refund
-  -Payment cancel
-  -Payment disburse
-  -Payment disburse
+  - Account Resource [GET and PUT only]
+  - Business Resource [GET and PUT only]
+  - Subscriptions Resource
+  - Payment refund
+  - Payment cancel
+  - Payment disburse
+  - Payment disburse
 
 
 ## Customer
