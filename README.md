@@ -31,6 +31,27 @@ npm i -S woven-pay-js
 import WovenPay from 'woven-pay-js';
 let wovenpay = new WovenPay(url, apikey, apisecret);
 ```
+## To add Token
+```javaScript
+let token = "mytoken"
+wovenpay.token = token
+```
+## To get Token
+```javaScript
+wovenpay.getAuthToken(merchantEmail: string, merchantPassword: string)
+```
+
+## To refresh Token
+```javaScript
+let response = await wovenpay.refreshAuthToken(token: string)
+token = await response.json();
+```
+## To verify Token
+```javaScript
+let response = await wovenpay.verifyAuthToken(token: string)
+is_valid = await response.json();
+```
+
 
 ## Customer
 ##### To Create a new customer
