@@ -38,7 +38,8 @@ wovenpay.token = token
 ```
 ## To get Token
 ```javaScript
-wovenpay.getAuthToken(merchantEmail: string, merchantPassword: string)
+let response = await wovenpay.getAuthToken(merchantEmail: string, merchantPassword: string)
+token = await response.json();
 ```
 
 ## To refresh Token
