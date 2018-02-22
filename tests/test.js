@@ -1,12 +1,12 @@
-import chai from 'chai'
-import WovenPay from '../built/index'
-import request from 'supertest'
+import chai from 'chai';
+import WovenPay from '../built/index';
+import request from 'supertest';
 
 function randomString(length){
   let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let string = ""
-  for(var i=0; i<=length; i++){
-    string += alphabet.charAt(Math.floor(Math.random() * alphabet.length))
+  let string = "";
+  for(var i=0; i <= length; i++) {
+    string += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
   }
   return string;
 }
@@ -16,137 +16,137 @@ function randomIPAddress(){
   return "https://"+randomString(7)+".wovennpay.com/"+ port.toString();
 }
 
-
 const expect = chai.expect
 const url = 'http://sandbox.wovenpay.com';
-const apikey = "ak_uCuLfshe4WR3AcdAT75cGJ";
-const apisecret = "sk_L6bdGXvm33phgstQ8bKwjJ";
-const pubkey = "pk_TPUMe9vcckTFuzQ8HJgaPE";
-const email = "jk@test.com";
+
+const apikey = "ak_7zeqY5qGVhPLTMKKyb3vwF";
+const apisecret = "sk_q6segivqhA3xxNPn2KkWbP";
+const email = "test@test.com";
 const password = "test12345";
 const wrongPassword = "test123451";
+const testToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiYWNjX2JrVVJrNGI2MnE2WGJXaE5DZWphUjMiLCJ1c2VybmFtZSI6InRlc3RAdGVzdC5jb20iLCJleHAiOjE1MTkzNjk0MTgsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsIm9yaWdfaWF0IjoxNTE5MzI2MjE4fQ.Y2EN5jsYzqCEHQNlacjDhQO_YBbOOcOzJmPzjybyQPI"
+let testBusiness = "bus_B6cDFj4uTz4AuFAUFzPFgm";
+
 const testIPAddress = randomIPAddress();
 
-let testBusiness = "bus_nRYFanSePwq5pHP4n5Nza3";
 
-describe('WovenPay JS SDK', () => {
-  it('Initialize WovenPay object', () => {
-    let wovenPay = new WovenPay(url, apikey, apisecret)
-    expect(wovenPay).to.be.an.instanceof(WovenPay)
+describe('Test Woven Object', () => {
+  it('Should initialize WovenPay object', () => {
+    let wovenpay = new WovenPay(url, apikey, apisecret);
+    expect(wovenpay).to.be.an.instanceof(WovenPay);
   }).timeout(0)
 
-  it('Get auth token (Correct password)', async () => {
-    let wovenPay = new WovenPay(url, apikey, apisecret)
-    let token = await wovenPay.getAuthToken(email, password)
-    expect(token.status).to.be.equal(200)
+  it('Should have Customers resource', () => {
+    let wovenpay = new WovenPay(url, apikey, apisecret);
+    expect(wovenpay).to.have.property('Customers');
   }).timeout(0)
 
-  it('Get auth token (Wrong password)', async () => {
-    let wovenPay = new WovenPay(url, apikey, apisecret)
-    let token = await wovenPay.getAuthToken(email, wrongPassword)
-    expect(token.status).to.be.equal(400)
+  it('Should have Graph resource', () => {
+    let wovenpay = new WovenPay(url, apikey, apisecret);
+    expect(wovenpay).to.have.property('Graph');
   }).timeout(0)
 
-  it('Refresh auth token', async () => {
-    let wovenPay = new WovenPay(url, apikey, apisecret)
-    let token = await wovenPay.getAuthToken(email, password)
-    let json = await token.json()
-    let refreshedToken = await wovenPay.refreshAuthToken(json.token)
-    expect(refreshedToken.status).to.be.equal(200)
+  it('Should have Plans resource', () => {
+    let wovenpay = new WovenPay(url, apikey, apisecret);
+    expect(wovenpay).to.have.property('Plans');
   }).timeout(0)
 
-  it('Verify auth token', async () => {
-    let wovenPay = new WovenPay(url, apikey, apisecret)
-    let token = await wovenPay.getAuthToken(email, password)
-    let json = await token.json()
-    let response = await wovenPay.verifyAuthToken(json.token)
-    expect(response.status).to.be.equal(200)
+  it('Should have Payments resource', () => {
+    let wovenpay = new WovenPay(url, apikey, apisecret);
+    expect(wovenpay).to.have.property('Payments');
+  }).timeout(0)
+  
+  it('Should have Webhooks resource', () => {
+    let wovenpay = new WovenPay(url, apikey, apisecret);
+    expect(wovenpay).to.have.property('Webhooks');
   }).timeout(0)
 
-  it('Charge payment', async () => {
-    let wovenPay = new WovenPay(url, apikey, apisecret)
-    let chargePayment = await wovenPay.chargePayment('mobile.mpesa', 200, '254727383066', 'email@sample.com', 'desc', 'ref')
-    expect(chargePayment.status).to.be.equal(200)
+
+  it('Should have prop token', () => {
+    let wovenpay = new WovenPay(url, apikey, apisecret);
+    expect(wovenpay).to.have.property('token');
+  }).timeout(0)
+  
+  it('Can set and get prop token', () => {
+    let wovenpay = new WovenPay(url, apikey, apisecret);
+    let tokn = randomString(10);
+    wovenpay.token = tokn;
+    expect(wovenpay.token).to.equal(tokn);
+  }).timeout(0)
+})
+
+describe('Test Customer Resource', () => {
+  let wovenpay = new WovenPay(url, apikey, apisecret);
+  wovenpay.token = testToken;
+  let customer = null;
+  
+  it('Should create customer', async () => {
+    let response = await wovenpay.Customers.create({email:randomString(6)+"@gmail.com"});
+    customer = await response.json();
+    expect(response.status).to.be.equal(201);
   }).timeout(0)
 
-  it('Check payments status: Expect pending status', async () => {
-    let wovenPay = new WovenPay(url, apikey, apisecret)
-    let chargePayment = await wovenPay.chargePayment('mobile.mpesa', 200, '254727383066', 'email@sample.com', 'desc', 'ref')
-    let json = await chargePayment.json()
-    let response = await wovenPay.checkPaymentStatus(json.transaction_id)    
-    expect(response.status).to.be.equal(200)
+  it('Should edit customer', async () => {
+    let response = await wovenpay.Customers.edit(customer.id, {email:randomString(4)+"@gmail.com"});
+  }).timeout(0)
+  
+  it('Should delete customer', async () => {
+    let response = await wovenpay.Customers.delete(customer.id);
+    expect(response.status).to.be.equal(204);
+  }).timeout(0)
+})
+
+describe('Test Plan Resource', () => {
+  let wovenpay = new WovenPay(url, apikey, apisecret);
+  wovenpay.token = testToken;
+  let plan = null;
+  
+  it('Should create Plan', async () => {
+    let response = await wovenpay.Plans.create({name:"Test "+randomString(3), business: testBusiness, price:1000});
+    plan = await response.json();
+    expect(response.status).to.be.equal(201);
   }).timeout(0)
 
-  it('Create webhook', async () => {
-    let wovenPay = new WovenPay(url, apikey, apisecret)
-    let token = await wovenPay.getAuthToken(email, password)
-    let jsonToken = await token.json()
-    wovenPay.setAuthToken(jsonToken.token)
-    let response = await wovenPay.createWebhook('customer.created', testIPAddress, 'test')
-    let responseJson = await response.json()
-    expect(response.status).to.be.equal(201)
+  it('Should edit Plan', async () => {        
+    let response = await wovenpay.Plans.edit(plan.id, {name:"Test "+randomString(3), business: testBusiness, price:1000});
+  }).timeout(0)
+  
+  it('Should delete Plan', async () => {
+    let response = await wovenpay.Plans.delete(plan.id);
+    expect(response.status).to.be.equal(204);
+  }).timeout(0)
+})
+
+describe('Test Webhook Resource', () => {
+  let wovenpay = new WovenPay(url, apikey, apisecret);
+  wovenpay.token = testToken;
+  let hook = null;
+
+  it('Should create Webhook', async () => {
+    let response = await wovenpay.Webhooks.create({event:"customer.created", target: randomIPAddress(), key:"test"});
+    hook = await response.json();
+    expect(response.status).to.be.equal(201);
   }).timeout(0)
 
-  it('Delete webhook', async () => {
-    let wovenPay = new WovenPay(url, apikey, apisecret)
-    let token = await wovenPay.getAuthToken(email, password)
-    let jsonToken = await token.json()
-    wovenPay.setAuthToken(jsonToken.token)
-    let response = await wovenPay.createWebhook('customer.created', randomIPAddress(), 'test')
-    let responseJson = await response.json()
-    let response2 = await wovenPay.deleteWebhook(responseJson.id)
-    expect(response2.status).to.be.equal(204)
+  it('Should edit Webhook', async () => {        
+    let response = await wovenpay.Webhooks.edit(hook.id, {event:"customer.created", target: randomIPAddress(), key:"test"});
+    expect(response.status).to.be.equal(200);
   }).timeout(0)
-
-  it('Create plan', async () => {
-    let wovenPay = new WovenPay(url, apikey, apisecret)
-    let token = await wovenPay.getAuthToken(email, password)
-    let jsonToken = await token.json()
-    wovenPay.setAuthToken(jsonToken.token)
-    let response = await wovenPay.createPlan(randomString(8), 200, testBusiness)
-    expect(response.status).to.be.equal(201)
+  
+  it('Should delete Webhook', async () => {
+    let response = await wovenpay.Webhooks.delete(hook.id);
+    expect(response.status).to.be.equal(204);
   }).timeout(0)
+})
 
-  it('Edit plan name', async () => {
-    let wovenPay = new WovenPay(url, apikey, apisecret)
-    let token = await wovenPay.getAuthToken(email, password)
-    let jsonToken = await token.json()
-    wovenPay.setAuthToken(jsonToken.token)
-    let response = await wovenPay.createPlan(randomString(8), 200, testBusiness)
-    let jsonResponse = await response.json()
-    let response2 = await wovenPay.editPlanName(jsonResponse.id, randomString(8))
-    expect(response2.status).to.be.equal(200)
-  }).timeout(0)
+describe('Test Graph Resource', () => {
+  let wovenpay = new WovenPay(url, apikey, apisecret);
+  wovenpay.token = testToken;
+  let hook = null;
 
-  it('Edit plan fully', async () => {
-    let wovenPay = new WovenPay(url, apikey, apisecret)
-    let token = await wovenPay.getAuthToken(email, password)
-    let jsonToken = await token.json()
-    wovenPay.setAuthToken(jsonToken.token)
-    let response = await wovenPay.createPlan(randomString(8), 200, testBusiness)
-    let jsonResponse = await response.json()    
-    let response2 = await wovenPay.editPlan(jsonResponse.id, randomString(8), 400, testBusiness)    
-    expect(response2.status).to.be.equal(200)
-  }).timeout(0)
-
-  it('Delete plan', async () => {
-    let wovenPay = new WovenPay(url, apikey, apisecret)
-    let token = await wovenPay.getAuthToken(email, password)
-    let jsonToken = await token.json()
-    wovenPay.setAuthToken(jsonToken.token)
-    let response = await wovenPay.createPlan(randomString(8), 200, testBusiness)
-    let jsonResponse = await response.json()
-    let response2 = await wovenPay.deletePlan(jsonResponse.id)
-    expect(response2.status).to.be.equal(204)
-  }).timeout(0)
-
-  it('Should send a graphql query', async () => {
-    let wovenpay = new WovenPay(url, apikey, apisecret)
-    let token = await wovenpay.getAuthToken(email, password)
-    let jsonToken = await token.json()
-    wovenpay.setAuthToken(jsonToken.token)
-    let response = await wovenpay.query(`{ allBusinesses {edges{node{id name }}} }`)
-    let response2 = await wovenpay.query`{ allBusinesses {edges{node{id name }}} }`
+  it('Should query Graph', async () => {
+    let response = await wovenpay.Graph.query(`{ allBusinesses {edges{node{id name }}} }`)
+    let response2 = await wovenpay.Graph.query`{ allBusinesses {edges{node{id name }}} }`
     expect(response.status).to.be.equal(200)
     expect(response2.status).to.be.equal(200)
   }).timeout(0)
