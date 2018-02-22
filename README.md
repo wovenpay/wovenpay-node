@@ -28,8 +28,8 @@ npm i -S woven-pay-js
 
 ## Create a new Instance of wovenpay
 ```javaScript
-import wovenpay from 'woven-pay-js';
-let woven = new wovenpay(url, apikey, apisecret);
+import WovenPay from 'woven-pay-js';
+let wovenpay = new WovenPay(url, apikey, apisecret);
 ```
 
 ## Customer
