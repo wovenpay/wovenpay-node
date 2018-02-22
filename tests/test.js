@@ -128,7 +128,7 @@ describe('Test Webhook Resource', () => {
     expect(response.status).to.be.equal(201);
   }).timeout(0)
 
-  it('Should edit Webhook', async () => {        
+  it('Should edit Webhook', async () => {
     let response = await wovenpay.Webhooks.edit(hook.id, {event:"customer.created", target: randomIPAddress(), key:"test"});
     expect(response.status).to.be.equal(200);
   }).timeout(0)

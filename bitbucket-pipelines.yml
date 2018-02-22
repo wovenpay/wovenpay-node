@@ -1,8 +1,0 @@
-image: node:6.9.4
-pipelines:
-  default:
-    - step:
-        script:
-          - npm install -g typescript
-          - npm install
-          - npm run stage
