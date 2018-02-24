@@ -1,3 +1,5 @@
+import * as Promise from 'bluebird';
+
 import Customer from './api/customer';
 import GraphQl from './api/graph';
 import Plan from './api/plan';
