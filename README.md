@@ -67,35 +67,35 @@ is_valid = await response.json();
 
 
 ## Customer
-##### To Create a new customer
+### To Create a new customer
 wovenpay.Customers.create(json payload)
 ```javaScript
 let response = await wovenpay.Customers.create({email: email});
 customer = await response.json();
 ```
 
-##### To Edit a customer
+### To Edit a customer
 wovenpay.Customers.edit(customer id, json payload)
 ```javaScript
 let response = wovenpay.Customers.edit(customer.id, {email: email});
 customer = await response.json();
 ```
 
-##### To Delete a customer
+### To Delete a customer
 wovenpay.Customers.delete(customer id)
 ```javaScript
 let response = wovenpay.Customers.delete(customer.id);
 customer = await response.json();
 ```
 
-##### Retrieve all customers
+### Retrieve all customers
 wovenpay.Customers.all()
 ```javaScript
 let response = wovenpay.Customers.all();
 customers = await response.json();
 ```
 
-##### Retrieve Specific customer
+### Retrieve Specific customer
 wovenpay.Customers.get(customer id)
 ```javaScript
 let response = wovenpay.Customers.get(customer.id);
@@ -103,21 +103,21 @@ customer = await response.json();
 ```
 
 ## Plan
-##### To Create a new plan
+### To Create a new plan
 wovenpay.Plans.create(json payload)
 ```javaScript
 let response = await wovenpay.Plans.create({name:planName, business: Business, price:1000});
 plan = await response.json();
 ```
 
-##### To Edit a plan
+### To Edit a plan
 wovenpay.Plans.edit(plan id, json payload)
 ```javaScript
 let response = wovenpay.Plans.create({name:planName, business: Business, price:2000});
 plan = await response.json();
 ```
 
-##### To Delete a plan
+### To Delete a plan
 wovenpay.Plans.delete(plan id)
 ```javaScript
 let response = wovenpay.Plans.delete(plan.id);
@@ -126,7 +126,7 @@ plan = await response.json();
 
 
 ## Payments
-##### To Create a new Payments Charge
+### To Create a new Payments Charge
 wovenpay.Payments.charge(json payload)
 ```json
 payload = {
@@ -147,7 +147,7 @@ let response = await wovenpay.Payments.charge(payload);
 charge = await response.json();
 ```
 
-##### Get list of Payment transactions
+### Get list of Payment transactions
 *You should probably want to use graphql query*
 wovenpay.Payments.transactions()
 ```javaScript
@@ -155,7 +155,7 @@ let response = wovenpay.Payments.transactions();
 transactions = await response.json();
 ```
 
-##### To Transaction Status
+### To Transaction Status
 wovenpay.Payments.status(transaction id)
 ```javaScript
 let response = wovenpay.Payments.status(transaction.id);
@@ -164,21 +164,21 @@ status = await response.json();
 
 
 ## Webhook
-##### To Create a new webhook
+### To Create a new webhook
 wovenpay.Webhooks.create(json payload)
 ```javaScript
 let response = await wovenpay.Webhooks.create({event: event, target:url, key:"notsecretkey"});
 hook = await response.json();
 ```
 
-##### To Edit a webhook
+### To Edit a webhook
 wovenpay.Webhooks.edit(hook id, json payload)
 ```javaScript
 let response = wovenpay.Webhooks.create({event:"customer.created", target: url, key:"secretkey"});
 hook = await response.json();
 ```
 
-##### To Delete a webhook
+### To Delete a webhook
 wovenpay.Webhooks.delete(hook id)
 ```javaScript
 let response = wovenpay.Webhooks.delete(hook.id);
@@ -186,7 +186,7 @@ hook = await response.json();
 ```
 
 ## GraphQl Query
-##### Query Graph
+### Query Graph
 One can use both string or template literals
 wovenpay.Graph.query(json payload)
 ```javaScript
