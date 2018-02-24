@@ -7,7 +7,7 @@ __** PLEASE NOTE THAT THIS LIBRARY IS UNDER ACTIVE DEVELOPMENT **__
 ## Install
 
 ```cmd
-npm i wovenpay --save
+npm install wovenpay --save
 ```
 
 ### SUPPORTED RESOURCES
