@@ -1,7 +1,7 @@
 {
-  "name": "woven-pay-js",
-  "version": "1.0.3",
-  "description": "Js SDK for the Woven Payment REST api",
+  "name": "wovenpay",
+  "version": "0.1.0",
+  "description": "Js SDK for the wovenpay API",
   "main": "built/index.js",
   "scripts": {
     "build": "tsc",
