@@ -1,5 +1,6 @@
 export default class Payment {
-    private url = '/payments';    
+    private url = '/payments';
+    private actionUrl: string = this.url+'/actions';
     private client: any;
     
     constructor(wovenClient: any) {
@@ -7,7 +8,7 @@ export default class Payment {
     }
   
     charge(payload: any) {
-      return fetch(`${this.client.url}${this.url}/charge`, {
+      return fetch(`${this.client.url}${this.actionUrl}/charge`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -28,7 +29,7 @@ export default class Payment {
     }
 
     status(transactionId: string) {
-      return fetch(`${this.client.url}${this.url}/${transactionId}/status`, {
+      return fetch(`${this.client.url}${this.actionUrl}/${transactionId}/status`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
