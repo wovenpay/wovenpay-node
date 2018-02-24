@@ -1,6 +1,5 @@
 
 export default class Graph {
-  private endpoint = '/graphql/';
   private client: any;
 
   constructor(wovenClient: any) {
@@ -18,15 +17,10 @@ export default class Graph {
     @param graphQuery - GraphQl query
     */
     let gQuery: string = graphQuery.raw? graphQuery[0] : graphQuery;
-    return fetch(`${this.client.url}${this.endpoint}`, {
+    return this.client.request({
+      url: `/graphql/`,
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${this.client.token}`
-      },
-      body: JSON.stringify({
-        'query': gQuery
-      })
+      body: JSON.stringify({query:gQuery})
     })
   }
 }

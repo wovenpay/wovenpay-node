@@ -14,18 +14,17 @@ let resourceObjects = {
 
 export default class WovenPay {
   private _token: string = null;
+  private _timeout: number = null;
+  private _version: string = "1";
   
-  private url: string;  
-  private authToken: string;
+  private url: string;
   private apikey: string;
   private apisecret: string;
-  private pubkey: string;
 
-  constructor(url: string, apikey: string, apisecret: string, pubkey: string) {
+  constructor(url: string, apikey: string, apisecret: string) {
     this.url = url;
     this.apikey = apikey;
     this.apisecret = apisecret;
-    this.pubkey = pubkey;
     
     for(let resource in resourceObjects){
       this[resource] = new resourceObjects[resource](this);
@@ -35,10 +34,27 @@ export default class WovenPay {
   get token(){
     return this._token;
   }
+  
   set token(tkn: string){
     this._token = tkn;
   }
 
+  set timeout(time: number){
+    this._timeout = time;
+  }
+
+  get timeout(){
+    return this._timeout;
+  }
+
+  set version(vers: string){
+    this._version = vers;
+  }
+
+  get version(){
+    return this._version;
+  }
+  
   getAuthToken(email: string, password: string) {
     return fetch(this.url + '/authorize/', {
       method: 'POST',
@@ -67,5 +83,45 @@ export default class WovenPay {
       },
       body: JSON.stringify({ token: token })
     })
+  }
+
+  getAuthHeader(authType: string){
+    switch(authType.toLowerCase()){
+      case "xpay":
+        return {'XPAY': `${this.apikey}:${this.apisecret}`}
+      case "jwt":
+        return {'Authorization': `Token ${this.token}`}
+      default:
+        return {};
+    }
+  }
+  
+  request(requestDef: any) {
+    const url = this.url + requestDef.url;
+    const _method = (requestDef.method || "GET").toUpperCase();
+    const _body = requestDef.body || null;
+    
+    const authType = requestDef.auth || "JWT";
+    const auth = this.getAuthHeader(authType);
+    
+    const _headers = {
+      'Content-Type': 'application/json',
+      'Woven-Api': this.version,
+      ...auth
+    };
+    
+    const options = {
+      method: _method,
+      headers: _headers,
+      body: _body
+    }
+
+    return new Promise((resolve, reject) => {
+      fetch(url, options).then(resolve).catch(reject);
+
+      if (this.timeout) {
+        setTimeout(reject, this.timeout, new Error("Timeout Error"));
+      }
+    });
   }
 }

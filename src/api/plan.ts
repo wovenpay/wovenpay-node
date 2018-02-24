@@ -1,5 +1,4 @@
 export default class Plan {
-    private url = '/plans';
     private client: any;
   
     constructor(wovenClient: any) {
@@ -7,33 +6,25 @@ export default class Plan {
     }
   
     create(payload: any) {
-      return fetch(`${this.client.url}${this.url}/`, {
+      return this.client.request({
+        url: `/plans/`,
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Token ${this.client.token}`
-        },
         body: JSON.stringify(payload)
       })
     }
   
     edit(planId: string, payload: any) {
-      return fetch(`${this.client.url}${this.url}/${planId}/`, {
+      return this.client.request({
+        url: `/plans/${planId}/`,
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Token ${this.client.token}`
-        },
         body: JSON.stringify(payload)
       })
     }
 
     delete(planId: string) {
-      return fetch(`${this.client.url}${this.url}/${planId}/`, {
+      return this.client.request({
+        url: `/plans/${planId}/`,
         method: 'DELETE',
-        headers: {
-          'Authorization': `Token ${this.client.token}`
-        }
       })
     }
   }

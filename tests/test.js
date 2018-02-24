@@ -24,7 +24,7 @@ const apisecret = "sk_q6segivqhA3xxNPn2KkWbP";
 const email = "test@test.com";
 const password = "test12345";
 const wrongPassword = "test123451";
-const testToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiYWNjX2JrVVJrNGI2MnE2WGJXaE5DZWphUjMiLCJ1c2VybmFtZSI6InRlc3RAdGVzdC5jb20iLCJleHAiOjE1MTkzNjk0MTgsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsIm9yaWdfaWF0IjoxNTE5MzI2MjE4fQ.Y2EN5jsYzqCEHQNlacjDhQO_YBbOOcOzJmPzjybyQPI"
+const testToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiYWNjX2JrVVJrNGI2MnE2WGJXaE5DZWphUjMiLCJ1c2VybmFtZSI6InRlc3RAdGVzdC5jb20iLCJleHAiOjE1MTk1MTg3OTUsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsIm9yaWdfaWF0IjoxNTE5NDc1NTk1fQ.A5kyfQDeLz8AgH7SfrzNqtgclx4d0XYpOqRWplHvCRc"
 let testBusiness = "bus_B6cDFj4uTz4AuFAUFzPFgm";
 
 const testIPAddress = randomIPAddress();
@@ -85,11 +85,22 @@ describe('Test Customer Resource', () => {
     customer = await response.json();
     expect(response.status).to.be.equal(201);
   }).timeout(0)
-
+ 
   it('Should edit customer', async () => {
     let response = await wovenpay.Customers.edit(customer.id, {email:randomString(4)+"@gmail.com"});
+    expect(response.status).to.be.equal(200);
   }).timeout(0)
   
+  it('Should retrieve all customers', async () => {
+    let response = await wovenpay.Customers.all();
+    expect(response.status).to.be.equal(200);
+  }).timeout(0)
+
+  it('Should get specific customer', async () => {
+    let response = await wovenpay.Customers.get(customer.id);
+    expect(response.status).to.be.equal(200);
+  }).timeout(0)
+
   it('Should delete customer', async () => {
     let response = await wovenpay.Customers.delete(customer.id);
     expect(response.status).to.be.equal(204);
@@ -109,6 +120,7 @@ describe('Test Plan Resource', () => {
 
   it('Should edit Plan', async () => {        
     let response = await wovenpay.Plans.edit(plan.id, {name:"Test "+randomString(3), business: testBusiness, price:1000});
+    expect(response.status).to.be.equal(200);
   }).timeout(0)
   
   it('Should delete Plan', async () => {

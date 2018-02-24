@@ -1,5 +1,4 @@
 export default class Webhook {
-    private url = '/webhooks';
     private client: any;
     
     constructor(wovenClient: any) {
@@ -7,33 +6,25 @@ export default class Webhook {
     }
   
     create(payload: any) {
-      return fetch(`${this.client.url}${this.url}/`, {
+      return this.client.request({
+        url: `/webhooks/`,
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Token ${this.client.token}`
-        },
         body: JSON.stringify(payload)
       })
     }
     
     edit(hookId: string, payload: any) {
-      return fetch(`${this.client.url}${this.url}/${hookId}/`, {
+      return this.client.request({
+        url: `/webhooks/${hookId}/`,
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Token ${this.client.token}`
-        },
         body: JSON.stringify(payload)
       })
     }
     
     delete(hookId: string) {
-      return fetch(`${this.client.url}${this.url}/${hookId}/`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Token ${this.client.token}`
-        }
+      return this.client.request({
+        url: `/webhooks/${hookId}/`,
+        method: 'DELETE'
       })
     }
   }

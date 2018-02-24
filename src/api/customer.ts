@@ -1,5 +1,4 @@
 export default class Customer {
-    private url = '/customers';
     private client: any;
   
     constructor(wovenClient: any) {
@@ -7,34 +6,42 @@ export default class Customer {
     }
   
     create(payload: any) {
-      return fetch(`${this.client.url}${this.url}/`, {
+      // Create a new customer
+      return this.client.request({
+        url: `/customers/`,
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Token ${this.client.token}`
-        },
         body: JSON.stringify(payload)
       })
     }
 
     edit(customerId: string, payload: any) {
-      return fetch(`${this.client.url}${this.url}/${customerId}/`, {
+      // Edit specified customer's details
+      return this.client.request({
+        url: `/customers/${customerId}/`,
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Token ${this.client.token}`
-        },
         body: JSON.stringify(payload)
       })
     }
-  
+    
     delete(customerId: string) {
-      return fetch(`${this.client.url}${this.url}/${customerId}/`, {
+      // Delete specified customers
+      return this.client.request({
+        url: `/customers/${customerId}/`,
         method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Token ${this.client.token}`
-        }
+      })
+    }
+
+    all(){
+      // Retrieve all customers
+      return this.client.request({
+        url: `/customers/`,
+      })
+    }
+    
+    get(customerId: string) {
+      // Retrieve specified customer
+      return this.client.request({
+        url: `/customers/${customerId}/`,
       })
     }
   }

@@ -20,6 +20,8 @@ npm i -S woven-pay-js
 ### To Be Added  
   - Account Resource [GET and PUT only]
   - Business Resource [GET and PUT only]
+  - Plan Resource [GET]
+  - Webhook Resource [GET]
   - Subscriptions Resource
   - Payment refund
   - Payment cancel
@@ -35,6 +37,16 @@ let wovenpay = new WovenPay(url, apikey, apisecret);
 ```javaScript
 let token = "mytoken"
 wovenpay.token = token
+```
+
+## To add request timeout
+```javaScript
+wovenpay.timeout = 5000 //5 seconds max
+```
+
+## To add api version
+```javaScript
+wovenpay.version = "1" //Every request will use version 1 of wovenpay api
 ```
 ## To get Token
 ```javaScript
@@ -73,6 +85,20 @@ customer = await response.json();
 wovenpay.Customers.delete(customer id)
 ```javaScript
 let response = wovenpay.Customers.delete(customer.id);
+customer = await response.json();
+```
+
+##### Retrieve all customers
+wovenpay.Customers.all()
+```javaScript
+let response = wovenpay.Customers.all();
+customers = await response.json();
+```
+
+##### Retrieve Specific customer
+wovenpay.Customers.get(customer id)
+```javaScript
+let response = wovenpay.Customers.get(customer.id);
 customer = await response.json();
 ```
 
