@@ -35,8 +35,11 @@ let wovenpay = new WovenPay(url, apikey, apisecret);
 ```
 ## To add Token
 ```javaScript
-let token = "mytoken"
-wovenpay.token = token
+let response = await wovenpay.getAuthToken(merchantEmail: string, merchantPassword: string);
+data = await response.json();
+
+let token = data.token;
+wovenpay.token = token;
 ```
 
 ## To add request timeout
