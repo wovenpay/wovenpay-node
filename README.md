@@ -31,7 +31,10 @@ npm install wovenpay --save
 ## Create a new Instance of wovenpay
 ```javaScript
 import WovenPay from 'wovenpay';
-let wovenpay = new WovenPay(url, apikey, apisecret);
+let wovenpay = new WovenPay(apikey, apisecret); //Defaults to sandbox api
+
+//To run on live api, pass true to 'live' parameter
+let wovenpay = new WovenPay(apikey, apisecret, true);
 ```
 ## To add Token
 ```javaScript
