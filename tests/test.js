@@ -17,7 +17,6 @@ function randomIPAddress(){
 }
 
 const expect = chai.expect
-const url = 'http://sandbox.wovenpay.com';
 
 const apikey = "ak_7zeqY5qGVhPLTMKKyb3vwF";
 const apisecret = "sk_q6segivqhA3xxNPn2KkWbP";
@@ -32,43 +31,43 @@ const testIPAddress = randomIPAddress();
 
 describe('Test Woven Object', () => {
   it('Should initialize WovenPay object', () => {
-    let wovenpay = new WovenPay(url, apikey, apisecret);
+    let wovenpay = new WovenPay(apikey, apisecret);
     expect(wovenpay).to.be.an.instanceof(WovenPay);
   }).timeout(0)
 
   it('Should have Customers resource', () => {
-    let wovenpay = new WovenPay(url, apikey, apisecret);
+    let wovenpay = new WovenPay(apikey, apisecret);
     expect(wovenpay).to.have.property('Customers');
   }).timeout(0)
 
   it('Should have Graph resource', () => {
-    let wovenpay = new WovenPay(url, apikey, apisecret);
+    let wovenpay = new WovenPay(apikey, apisecret);
     expect(wovenpay).to.have.property('Graph');
   }).timeout(0)
 
   it('Should have Plans resource', () => {
-    let wovenpay = new WovenPay(url, apikey, apisecret);
+    let wovenpay = new WovenPay(apikey, apisecret);
     expect(wovenpay).to.have.property('Plans');
   }).timeout(0)
 
   it('Should have Payments resource', () => {
-    let wovenpay = new WovenPay(url, apikey, apisecret);
+    let wovenpay = new WovenPay(apikey, apisecret);
     expect(wovenpay).to.have.property('Payments');
   }).timeout(0)
   
   it('Should have Webhooks resource', () => {
-    let wovenpay = new WovenPay(url, apikey, apisecret);
+    let wovenpay = new WovenPay(apikey, apisecret);
     expect(wovenpay).to.have.property('Webhooks');
   }).timeout(0)
 
 
   it('Should have prop token', () => {
-    let wovenpay = new WovenPay(url, apikey, apisecret);
+    let wovenpay = new WovenPay(apikey, apisecret);
     expect(wovenpay).to.have.property('token');
   }).timeout(0)
   
   it('Can set and get prop token', () => {
-    let wovenpay = new WovenPay(url, apikey, apisecret);
+    let wovenpay = new WovenPay(apikey, apisecret);
     let tokn = randomString(10);
     wovenpay.token = tokn;
     expect(wovenpay.token).to.equal(tokn);
@@ -76,7 +75,7 @@ describe('Test Woven Object', () => {
 })
 
 describe('Test Customer Resource', () => {
-  let wovenpay = new WovenPay(url, apikey, apisecret);
+  let wovenpay = new WovenPay(apikey, apisecret);
   wovenpay.token = testToken;
   let customer = null;
   
@@ -108,7 +107,7 @@ describe('Test Customer Resource', () => {
 })
 
 describe('Test Plan Resource', () => {
-  let wovenpay = new WovenPay(url, apikey, apisecret);
+  let wovenpay = new WovenPay(apikey, apisecret);
   wovenpay.token = testToken;
   let plan = null;
   
@@ -130,7 +129,7 @@ describe('Test Plan Resource', () => {
 })
 
 describe('Test Webhook Resource', () => {
-  let wovenpay = new WovenPay(url, apikey, apisecret);
+  let wovenpay = new WovenPay(apikey, apisecret);
   wovenpay.token = testToken;
   let hook = null;
 
@@ -152,7 +151,7 @@ describe('Test Webhook Resource', () => {
 })
 
 describe('Test Graph Resource', () => {
-  let wovenpay = new WovenPay(url, apikey, apisecret);
+  let wovenpay = new WovenPay(apikey, apisecret);
   wovenpay.token = testToken;
   let hook = null;
 

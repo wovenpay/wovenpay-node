@@ -14,6 +14,9 @@ let resourceObjects = {
   Webhooks: Webhook
 }
 
+const SANDBOX_URL = "http://sandbox.wovenpay.com";
+const LIVE_URL = "https://api.wovenpay.com";
+
 export default class WovenPay {
   private _token: string = null;
   private _timeout: number = null;
@@ -23,8 +26,8 @@ export default class WovenPay {
   private apikey: string;
   private apisecret: string;
 
-  constructor(url: string, apikey: string, apisecret: string) {
-    this.url = url;
+  constructor(apikey: string, apisecret: string, live=false) {
+    this.url = live? LIVE_URL : SANDBOX_URL ;
     this.apikey = apikey;
     this.apisecret = apisecret;
     
