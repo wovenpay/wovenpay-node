@@ -66,6 +66,10 @@ describe('Test Woven Object', () => {
   it('Should have prop token', () => {
     expect(wovenpay).to.have.property('token');
   }).timeout(0)
+
+  it('Should have Account resource', () => {
+    expect(wovenpay).to.have.property('Account');
+  }).timeout(0)
   
   it('Can set and get prop token', () => {
     let tokn = randomString(10);
@@ -181,5 +185,16 @@ describe('Test Graph Resource', () => {
     let response2 = await wovenpay.Graph.query`{ allBusinesses {edges{node{id name }}} }`
     expect(response.status).to.be.equal(200)
     expect(response2.status).to.be.equal(200)
+  }).timeout(0)
+})
+
+describe('Test Account Resource', () => {
+  let wovenpay = new WovenPay(apikey, apisecret);
+  wovenpay.token = testToken;
+  let hook = null;
+
+  it('Should fetch account details', async () => {
+    let response = await wovenpay.Account.getAccountDetails()
+    expect(response.status).to.be.equal(200)
   }).timeout(0)
 })
