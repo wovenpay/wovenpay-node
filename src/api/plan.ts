@@ -27,4 +27,19 @@ export default class Plan {
         method: 'DELETE',
       })
     }
+
+    all(){
+      // Retrieve all plans
+      return this.client.request({
+        url: `/plans/`,
+      })
+    }
+    
+    get(planId: string) {
+      // Retrieve specified plan
+      return this.client.request({
+        url: `/plans/${planId}/`,
+      })
+    }
+
   }

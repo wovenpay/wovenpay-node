@@ -4,6 +4,7 @@ import Customer from './api/customer';
 import GraphQl from './api/graph';
 import Plan from './api/plan';
 import Payment from './api/payment';
+import Subscription from './api/subscription';
 import Webhook from './api/webhook';
 
 let resourceObjects = {
@@ -11,6 +12,7 @@ let resourceObjects = {
   Graph: GraphQl,
   Plans: Plan,
   Payments: Payment,
+  Subscriptions: Subscription,
   Webhooks: Webhook
 }
 

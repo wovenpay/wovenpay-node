@@ -15,7 +15,7 @@ npm install wovenpay --save
   - Payments
   - Plans
   - Webhooks
-  - Payments
+  - Subscriptions
 
 ### To Be Added  
   - Account Resource [GET and PUT only]
@@ -112,14 +112,30 @@ customer = await response.json();
 ### To Create a new plan
 wovenpay.Plans.create(json payload)
 ```javaScript
-let response = await wovenpay.Plans.create({name:planName, business: Business, price:1000});
+const payload = {
+  name: planName,
+  business: businessId,
+  price: 1000
+}
+let response = await wovenpay.Plans.create(payload);
 plan = await response.json();
 ```
-
+### Retrieve all plans
+wovenpay.Plans.all()
+```javaScript
+let response = wovenpay.Plans.all();
+plans = await response.json();
+```
+### Retrieve Specific plan
+wovenpay.Plans.get(plan id)
+```javaScript
+let response = wovenpay.Plans.get(plan.id);
+plans = await response.json();
+```
 ### To Edit a plan
 wovenpay.Plans.edit(plan id, json payload)
 ```javaScript
-let response = wovenpay.Plans.create({name:planName, business: Business, price:2000});
+let response = wovenpay.Plans.edit(plan.id, {name:planName, business: Business, price:2000});
 plan = await response.json();
 ```
 
@@ -130,12 +146,51 @@ let response = wovenpay.Plans.delete(plan.id);
 plan = await response.json();
 ```
 
+## Subscription
+### To Create a new Subscription
+wovenpay.Subscriptions.create(json payload)
+```javaScript
+const payload = {
+    customer: customerId,
+    plan: planId,
+    business: businessId,
+    period: "month",
+    interval: 1
+}
+let response = await wovenpay.Subscriptions.create(payload);
+subscription = await response.json();
+```
+### Retrieve all Subscriptions
+wovenpay.Subscriptions.all()
+```javaScript
+let response = wovenpay.Subscriptions.all();
+subscriptions = await response.json();
+```
+### Retrieve Specific Subscription
+wovenpay.Subscriptions.get(plan id)
+```javaScript
+let response = wovenpay.Subscriptions.get(plan.id);
+subscription = await response.json();
+```
+### To Edit a Subscription
+wovenpay.Subscriptions.edit(subscription id, json payload)
+```javaScript
+let response = wovenpay.Subscriptions.edit(subscription.id, {interval: 3});
+subscription = await response.json();
+```
+
+### To Delete a Subscription
+wovenpay.Subscriptions.delete(plan id)
+```javaScript
+let response = wovenpay.Subscriptions.delete(subscription.id);
+subscription = await response.json();
+```
 
 ## Payments
 ### To Create a new Payments Charge
 wovenpay.Payments.charge(json payload)
-```json
-payload = {
+```javaScript
+const payload = {
   "method": "mobile.mpesa",
   "amount": 10,
   "mobile":phone,
@@ -147,12 +202,9 @@ payload = {
   },
   "reference": "myuniquereference"
 }
-```
-```javaScript
 let response = await wovenpay.Payments.charge(payload);
 charge = await response.json();
 ```
-
 ### Get list of Payment transactions
 *You should probably want to use graphql query*
 wovenpay.Payments.transactions()
@@ -160,14 +212,12 @@ wovenpay.Payments.transactions()
 let response = wovenpay.Payments.transactions();
 transactions = await response.json();
 ```
-
 ### To Transaction Status
 wovenpay.Payments.status(transaction id)
 ```javaScript
 let response = wovenpay.Payments.status(transaction.id);
 status = await response.json();
 ```
-
 
 ## Webhook
 ### To Create a new webhook
@@ -176,14 +226,12 @@ wovenpay.Webhooks.create(json payload)
 let response = await wovenpay.Webhooks.create({event: event, target:url, key:"notsecretkey"});
 hook = await response.json();
 ```
-
 ### To Edit a webhook
 wovenpay.Webhooks.edit(hook id, json payload)
 ```javaScript
 let response = wovenpay.Webhooks.create({event:"customer.created", target: url, key:"secretkey"});
 hook = await response.json();
 ```
-
 ### To Delete a webhook
 wovenpay.Webhooks.delete(hook id)
 ```javaScript
