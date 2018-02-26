@@ -20,9 +20,7 @@ npm install wovenpay --save
 ### To Be Added  
   - Account Resource [GET and PUT only]
   - Business Resource [GET and PUT only]
-  - Plan Resource [GET]
   - Webhook Resource [GET]
-  - Subscriptions Resource
   - Payment refund
   - Payment cancel
   - Payment disburse
