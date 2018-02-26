@@ -70,6 +70,10 @@ describe('Test Woven Object', () => {
   it('Should have Account resource', () => {
     expect(wovenpay).to.have.property('Account');
   }).timeout(0)
+
+  it('Should have Business resource', () => {
+    expect(wovenpay).to.have.property('Business');
+  }).timeout(0)
   
   it('Can set and get prop token', () => {
     let tokn = randomString(10);
@@ -194,7 +198,23 @@ describe('Test Account Resource', () => {
   let hook = null;
 
   it('Should fetch account details', async () => {
-    let response = await wovenpay.Account.getAccountDetails()
+    let response = await wovenpay.Account.getAccountDetails();
+    expect(response.status).to.be.equal(200);
+  }).timeout(0)
+})
+
+describe('Test Business Resource', () => {
+  let wovenpay = new WovenPay(apikey, apisecret);
+  wovenpay.token = testToken;
+  let hook = null;
+
+  it('Should fetch all businesses', async () => {
+    let response = await wovenpay.Business.all()
     expect(response.status).to.be.equal(200)
   }).timeout(0)
+
+  // todo: add test for fetch specific business
+  // todo: add test for update a business
+  // todo: add test for change attribute of a business
+  // todo: add test for deleting a business
 })
