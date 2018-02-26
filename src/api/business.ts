@@ -21,7 +21,7 @@ export default class Business {
     })
   }
 
-  update(businessId: string, payload: object){
+  edit(businessId: string, payload: object){
     // update business
     return this.client.request({
       url: `/business/${businessId}/`,
