@@ -6,6 +6,8 @@ import Plan from './api/plan';
 import Payment from './api/payment';
 import Subscription from './api/subscription';
 import Webhook from './api/webhook';
+import Account from './api/account';
+import Business from './api/business';
 
 let resourceObjects = {
   Customers: Customer,
@@ -13,7 +15,9 @@ let resourceObjects = {
   Plans: Plan,
   Payments: Payment,
   Subscriptions: Subscription,
-  Webhooks: Webhook
+  Webhooks: Webhook,
+  Account: Account,
+  Business: Business
 }
 
 const SANDBOX_URL = "http://sandbox.wovenpay.com";

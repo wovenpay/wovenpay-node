@@ -16,10 +16,10 @@ npm install wovenpay --save
   - Plans
   - Webhooks
   - Subscriptions
-
-### To Be Added  
   - Account Resource [GET and PUT only]
   - Business Resource [GET and PUT only]
+
+### To Be Added
   - Webhook Resource [GET]
   - Payment refund
   - Payment cancel
@@ -69,6 +69,37 @@ let response = await wovenpay.verifyAuthToken(token: string)
 is_valid = await response.json();
 ```
 
+## Account
+#### To get details about an account
+```javaScript
+  let response = await wovenpay.Account.details();
+  details = await response.json()
+```
+
+## Businesses/Apps
+#### Get all businesses
+```js
+let response = await wovenpay.Business.all()
+businesses = await response.json()
+```
+
+#### Get specific business
+```js
+let response = await wovenpay.Business.get(businessId: string)
+business = await response.json()
+```
+
+#### Edit a business
+```js
+let response = await wovenpay.Business.edit(businessId: string, payload: object)
+updateResponse = await response.json()
+```
+
+#### Delete business
+```js
+let response = await wovenpay.Business.delete(businessId: string)
+deleteResponse = await response.json()
+```
 
 ## Customer
 #### Create a new customer

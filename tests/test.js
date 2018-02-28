@@ -1,6 +1,7 @@
 import chai from 'chai';
-import WovenPay from '../built/index';
-import request from 'supertest';
+import SpiedWoven, {JWTResourceResponse} from './utils';
+
+const expect = chai.expect;
 
 function randomString(length){
   let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -11,34 +12,21 @@ function randomString(length){
   return string;
 }
 
-function randomIPAddress(){
-  let port = Math.floor(8000 + Math.random() * 12000);
-  return "https://"+randomString(7)+".wovennpay.com/"+ port.toString();
+
+function randomURL(){  
+  return "https://"+randomString(7)+".wovennpay.com/"
 }
-
-const expect = chai.expect
-
-const apikey = "ak_7zeqY5qGVhPLTMKKyb3vwF";
-const apisecret = "sk_q6segivqhA3xxNPn2KkWbP";
-const email = "test@test.com";
-const password = "test12345";
-const wrongPassword = "test123451";
-const testToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiYWNjX2JrVVJrNGI2MnE2WGJXaE5DZWphUjMiLCJ1c2VybmFtZSI6InRlc3RAdGVzdC5jb20iLCJleHAiOjE1MTk3MDE2ODgsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsIm9yaWdfaWF0IjoxNTE5NjU4NDg4fQ.p7V85SFoZ3WPF08c5MdkVPgQllB6DGZ6pS8w_OSmTdU"
 
 let testBusiness = "bus_B6cDFj4uTz4AuFAUFzPFgm";
 let testCustomer = "cus_BBmafrJiRgTJaVh5aenwLm";
 let testPlan = "plan_jpcms2jwkvHbinJHvHygkZ";
 
-const testIPAddress = randomIPAddress();
+const testIPAddress = randomURL();
 
 
 describe('Test Woven Object', () => {
-  let wovenpay = new WovenPay(apikey, apisecret);
-  
-  it('Should initialize WovenPay object', () => {
-    expect(wovenpay).to.be.an.instanceof(WovenPay);
-  }).timeout(0)
-
+  let wovenpay = SpiedWoven();
+   
   it('Should have Customers resource', () => {
     expect(wovenpay).to.have.property('Customers');
   }).timeout(0)
@@ -66,6 +54,14 @@ describe('Test Woven Object', () => {
   it('Should have prop token', () => {
     expect(wovenpay).to.have.property('token');
   }).timeout(0)
+
+  it('Should have Account resource', () => {
+    expect(wovenpay).to.have.property('Account');
+  }).timeout(0)
+
+  it('Should have Business resource', () => {
+    expect(wovenpay).to.have.property('Business');
+  }).timeout(0)
   
   it('Can set and get prop token', () => {
     let tokn = randomString(10);
@@ -75,111 +71,177 @@ describe('Test Woven Object', () => {
 })
 
 describe('Test Customer Resource', () => {
-  let wovenpay = new WovenPay(apikey, apisecret);
-  wovenpay.token = testToken;
-  let customer = null;
+  let wovenpay = SpiedWoven();
   
-  it('Should create customer', async () => {
-    let response = await wovenpay.Customers.create({email:randomString(6)+"@gmail.com"});
-    customer = await response.json();
-    expect(response.status).to.be.equal(201);
+  it('Should create customer', () => {
+    let body = {email:"test@test.com"}
+    let response = wovenpay.Customers.create(body);
+    let endpoint = "customers"
+    let expected = JWTResourceResponse(endpoint, body, "POST")
+    expect(response).to.deep.equal(expected)
   }).timeout(0)
  
-  it('Should edit customer', async () => {
-    let response = await wovenpay.Customers.edit(customer.id, {email:randomString(4)+"@gmail.com"});
-    expect(response.status).to.be.equal(200);
+  it('Should edit customer', () => {
+    let body = {email:"test@test.com"}
+    let response = wovenpay.Customers.edit(1, body);
+    let endpoint = "customers/1"
+    let expected = JWTResourceResponse(endpoint, body, "PUT")
+    expect(response).to.deep.equal(expected)
   }).timeout(0)
   
-  it('Should retrieve all customers', async () => {
-    let response = await wovenpay.Customers.all();
-    expect(response.status).to.be.equal(200);
+  it('Should retrieve all customers', () => {
+    let response = wovenpay.Customers.all();
+    let endpoint = "customers"
+    let expected = JWTResourceResponse(endpoint)
+    expect(response).to.deep.equal(expected)
   }).timeout(0)
 
-  it('Should get specific customer', async () => {
-    let response = await wovenpay.Customers.get(customer.id);
-    expect(response.status).to.be.equal(200);
+  it('Should get specific customer', () => {
+    let response = wovenpay.Customers.get(1);
+    let endpoint = "customers/1"
+    let expected = JWTResourceResponse(endpoint)
+    expect(response).to.deep.equal(expected)
   }).timeout(0)
 
-  it('Should delete customer', async () => {
-    let response = await wovenpay.Customers.delete(customer.id);
-    expect(response.status).to.be.equal(204);
+  it('Should delete customer', () => {
+    let response = wovenpay.Customers.delete(1);
+    let endpoint = "customers/1"
+    let expected = JWTResourceResponse(endpoint, null, "DELETE")
+    expect(response).to.deep.equal(expected)
   }).timeout(0)
 })
 
 describe('Test Plan Resource', () => {
-  let wovenpay = new WovenPay(apikey, apisecret);
-  wovenpay.token = testToken;
-  let plan = null;
+  let wovenpay = SpiedWoven();
   
-  it('Should create Plan', async () => {
-    let response = await wovenpay.Plans.create({name:"Test "+randomString(3), business: testBusiness, price:1000});
-    plan = await response.json();
-    expect(response.status).to.be.equal(201);
+  it('Should create Plan', () => {
+    let body = {name:"Test "+randomString(3), business: testBusiness, price:1000};
+    let response = wovenpay.Plans.create(body);
+    let endpoint = "plans"
+    let expected = JWTResourceResponse(endpoint, body, "POST")
+    expect(response).to.deep.equal(expected)
   }).timeout(0)
 
-  it('Should retrieve all Plans', async () => {
-    let response = await wovenpay.Plans.all();
-    expect(response.status).to.be.equal(200);
+  it('Should retrieve all Plans', () => {
+    let response = wovenpay.Plans.all();
+    let endpoint = "plans";
+    let expected = JWTResourceResponse(endpoint);
+    expect(response).to.deep.equal(expected);
   }).timeout(0)
 
-  it('Should get specific Plan', async () => {
-    let response = await wovenpay.Plans.get(plan.id);
-    expect(response.status).to.be.equal(200);
+  it('Should get specific Plan', () => {
+    let response = wovenpay.Plans.get(1);
+    let endpoint = "plans/1";
+    let expected = JWTResourceResponse(endpoint);
+    expect(response).to.deep.equal(expected);
   }).timeout(0)
 
-  it('Should edit Plan', async () => {        
-    let response = await wovenpay.Plans.edit(plan.id, {name:"Test "+randomString(3), business: testBusiness, price:1000});
-    expect(response.status).to.be.equal(200);
+  it('Should edit Plan', () => {        
+    let body = {name:"Test "+randomString(3), business: testBusiness, price:1000}
+    let response = wovenpay.Plans.edit(1, body);
+    let endpoint = "plans/1";
+    let expected = JWTResourceResponse(endpoint, body, "PUT");
+    expect(response).to.deep.equal(expected);
   }).timeout(0)
   
   it('Should delete Plan', async () => {
-    let response = await wovenpay.Plans.delete(plan.id);
-    expect(response.status).to.be.equal(204);
+    let response = wovenpay.Plans.delete(1);
+    let endpoint = "plans/1";
+    let expected = JWTResourceResponse(endpoint, null, "DELETE");
+    expect(response).to.deep.equal(expected);
   }).timeout(0)
 })
 
 
 describe('Test Subscription Resource', () => {
-  let wovenpay = new WovenPay(apikey, apisecret);
-  wovenpay.token = testToken;
-  it('Should retrieve all Subscription', async () => {
-    let response = await wovenpay.Subscriptions.all();
-    expect(response.status).to.be.equal(200);
-  }).timeout(0)
-
+  let wovenpay = SpiedWoven();
+  
+  it('Should retrieve all Subscription', () => {
+    let response = wovenpay.Subscriptions.all();
+    let endpoint = "subscriptions";
+    let expected = JWTResourceResponse(endpoint);
+    expect(response).to.deep.equal(expected);
+  }).timeout(0);
 })
 
 describe('Test Webhook Resource', () => {
-  let wovenpay = new WovenPay(apikey, apisecret);
-  wovenpay.token = testToken;
-  let hook = null;
+  let wovenpay = SpiedWoven();
 
-  it('Should create Webhook', async () => {
-    let response = await wovenpay.Webhooks.create({event:"customer.created", target: randomIPAddress(), key:"test"});
-    hook = await response.json();
-    expect(response.status).to.be.equal(201);
+  it('Should create Webhook',  () => {
+    let body = {event:"customer.created", target: randomURL(), key:"test"};
+    let response = wovenpay.Webhooks.create(body);
+    let endpoint = "webhooks";
+    let expected = JWTResourceResponse(endpoint, body, "POST");
+    expect(response).to.deep.equal(expected);
   }).timeout(0)
 
-  it('Should edit Webhook', async () => {
-    let response = await wovenpay.Webhooks.edit(hook.id, {event:"customer.created", target: randomIPAddress(), key:"test"});
-    expect(response.status).to.be.equal(200);
+  it('Should edit Webhook', () => {
+    let body = {event:"customer.created", target: randomURL(), key:"test"};
+    let response = wovenpay.Webhooks.edit(1, body);
+    let endpoint = "webhooks/1";
+    let expected = JWTResourceResponse(endpoint, body, "PUT");
+    expect(response).to.deep.equal(expected);
   }).timeout(0)
   
-  it('Should delete Webhook', async () => {
-    let response = await wovenpay.Webhooks.delete(hook.id);
-    expect(response.status).to.be.equal(204);
+  it('Should delete Webhook', () => {
+    let response = wovenpay.Webhooks.delete(1);
+    let endpoint = "webhooks/1";
+    let expected = JWTResourceResponse(endpoint, null, "DELETE");
+    expect(response).to.deep.equal(expected);
   }).timeout(0)
 })
 
 describe('Test Graph Resource', () => {
-  let wovenpay = new WovenPay(apikey, apisecret);
-  wovenpay.token = testToken;
-  let hook = null;
+  let wovenpay = SpiedWoven();
+  let endpoint = "graphql";
+  let body = {query:'{ allBusinesses {edges{node{id name }}} }'};
+  
+  it('Should query Graph', () => {
+    let response = wovenpay.Graph.query(`{ allBusinesses {edges{node{id name }}} }`);
+    let expected = JWTResourceResponse(endpoint, body, "POST");
+    expect(response).to.deep.equal(expected);
+  }).timeout(0)
 
-  it('Should query Graph', async () => {
-    let response = await wovenpay.Graph.query(`{ allBusinesses {edges{node{id name }}} }`)
-    let response2 = await wovenpay.Graph.query`{ allBusinesses {edges{node{id name }}} }`
-    expect(response.status).to.be.equal(200)
-    expect(response2.status).to.be.equal(200)
+  it('Should query Graph: template literal', () => {
+    let response = wovenpay.Graph.query`{ allBusinesses {edges{node{id name }}} }`;
+    let expected = JWTResourceResponse(endpoint, body, "POST");
+    expect(response).to.deep.equal(expected);
+  }).timeout(0)
+})
+
+describe('Test Account Resource', () => {
+  let wovenpay = SpiedWoven();
+
+  it('Should fetch account details', () => {
+    let endpoint = "me";
+    let response = wovenpay.Account.details();
+    let expected = JWTResourceResponse(endpoint);
+    expect(response).to.deep.equal(expected);
+  }).timeout(0)
+})
+
+describe('Test Business Resource', () => {
+  let wovenpay = SpiedWoven();
+  
+  it('Should fetch all businesses', async () => {    
+    let response = wovenpay.Business.all()
+    let endpoint = "business"
+    let expected = JWTResourceResponse(endpoint)
+    expect(response).to.deep.equal(expected)
+  }).timeout(0)
+  
+  it('Should edit Business', () => {
+    let body = {name:"new business"};
+    let response = wovenpay.Business.edit(1, body);
+    let endpoint = "business/1";
+    let expected = JWTResourceResponse(endpoint, body, "PUT");
+    expect(response).to.deep.equal(expected);
+  }).timeout(0)
+  
+  it('Should delete Business', () => {
+    let response = wovenpay.Business.delete(1);
+    let endpoint = "business/1";
+    let expected = JWTResourceResponse(endpoint, null, "DELETE");
+    expect(response).to.deep.equal(expected);
   }).timeout(0)
 })
