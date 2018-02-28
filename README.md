@@ -72,7 +72,7 @@ is_valid = await response.json();
 ## Account
 #### To get details about an account
 ```javaScript
-  let response = await wovenpay.Account.getAccountDetails();
+  let response = await wovenpay.Account.details();
   details = await response.json()
 ```
 
@@ -92,12 +92,6 @@ business = await response.json()
 #### Edit a business
 ```js
 let response = await wovenpay.Business.edit(businessId: string, payload: object)
-updateResponse = await response.json()
-```
-
-#### Change attribute
-```js
-let response = await wovenpay.Business.changeAttribute(businessId: string, payload: object)
 updateResponse = await response.json()
 ```
 

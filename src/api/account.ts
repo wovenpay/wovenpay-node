@@ -5,11 +5,10 @@ export default class Account {
     this.client = wovenClient;
   }
 
-  getAccountDetails(){
+  details(){
     // get account details
     return this.client.request({
       url: '/me/',
-      method: 'GET'
     });
   }
 }
