@@ -5,7 +5,8 @@
   "main": "built/index.js",
   "scripts": {
     "build": "tsc",
-    "test": "tsc && mocha tests --recursive --watch --compilers js:babel-core/register --require tests/init.js"
+    "test": "tsc && mocha tests --recursive --compilers js:babel-core/register --require tests/init.js",
+    "test:watch": "tsc && mocha tests --recursive --watch --compilers js:babel-core/register --require tests/init.js"
   },
   "author": "thatmarc_ <mark@wovenpay.com> (http://www.markmakuno.com/)",
   "license": "ISC",
