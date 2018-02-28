@@ -1,5 +1,7 @@
 # wovenpay JS SDK
 
+[![Build Status](https://travis-ci.org/wovenpay/wovenpay-node.svg?branch=master)](https://travis-ci.org/wovenpay/wovenpay-node)
+
 __** PLEASE NOTE THAT THIS LIBRARY IS UNDER ACTIVE DEVELOPMENT **__
 
 # USAGE
