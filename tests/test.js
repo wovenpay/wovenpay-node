@@ -229,4 +229,19 @@ describe('Test Business Resource', () => {
     let expected = JWTResourceResponse(endpoint)
     expect(response).to.deep.equal(expected)
   }).timeout(0)
+  
+  it('Should edit Business', () => {
+    let body = {name:"new business"};
+    let response = wovenpay.Business.edit(1, body);
+    let endpoint = "business/1";
+    let expected = JWTResourceResponse(endpoint, body, "PUT");
+    expect(response).to.deep.equal(expected);
+  }).timeout(0)
+  
+  it('Should delete Business', () => {
+    let response = wovenpay.Business.delete(1);
+    let endpoint = "business/1";
+    let expected = JWTResourceResponse(endpoint, null, "DELETE");
+    expect(response).to.deep.equal(expected);
+  }).timeout(0)
 })
