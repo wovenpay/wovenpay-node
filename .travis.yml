@@ -4,3 +4,6 @@ node_js:
   - "8"
 before_script:
   - npm install -g typescript
+
+notifications:
+    slack: wovenpay:4BHHEkcEuu4LtfN0tw80hieF
