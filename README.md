@@ -45,9 +45,18 @@ let token = data.token;
 wovenpay.token = token;
 ```
 
-## Change Request Timeout
-```javaScript
-wovenpay.timeout = 5000 //5 seconds max
+## Add Request Timeout
+```js
+  import * as Promise from 'bluebird';
+  const TIMEOUT = 2000;
+  
+  function getCustomers(){
+    return new Promise((resolve, reject) => {
+      wovenpay.Customers.all().then(resolve).catch(reject);
+      
+      setTimeout(reject, TIMEOUT, new Error("Timeout Error"));    
+    });
+  }
 ```
 
 ## Change API version

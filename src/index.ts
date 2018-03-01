@@ -1,5 +1,3 @@
-import * as Promise from 'bluebird';
-
 import Customer from './api/customer';
 import GraphQl from './api/graph';
 import Plan from './api/plan';
@@ -25,7 +23,6 @@ const LIVE_URL = "https://api.wovenpay.com";
 
 export default class WovenPay {
   private _token: string = null;
-  private _timeout: number = null;
   private _version: string = "1";
   
   private url: string;
@@ -49,15 +46,7 @@ export default class WovenPay {
   set token(tkn: string){
     this._token = tkn;
   }
-
-  set timeout(time: number){
-    this._timeout = time;
-  }
-
-  get timeout(){
-    return this._timeout;
-  }
-
+  
   set version(vers: string){
     this._version = vers;
   }
@@ -127,12 +116,6 @@ export default class WovenPay {
       body: _body
     }
 
-    return new Promise((resolve, reject) => {
-      fetch(url, options).then(resolve).catch(reject);
-
-      if (this.timeout) {
-        setTimeout(reject, this.timeout, new Error("Timeout Error"));
-      }
-    });
+    return fetch(url, options);
   }
 }
