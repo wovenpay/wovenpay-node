@@ -1,3 +1,5 @@
+import fetch from 'cross-fetch';
+
 import Customer from './api/customer';
 import GraphQl from './api/graph';
 import Plan from './api/plan';
