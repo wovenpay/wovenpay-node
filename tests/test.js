@@ -1,4 +1,5 @@
 import chai from 'chai';
+import Woven from '../built';
 import SpiedWoven, {JWTResourceResponse} from './utils';
 
 const expect = chai.expect;
@@ -243,5 +244,15 @@ describe('Test Business Resource', () => {
     let endpoint = "business/1";
     let expected = JWTResourceResponse(endpoint, null, "DELETE");
     expect(response).to.deep.equal(expected);
+  }).timeout(0)  
+})
+
+describe('Test Fetch', () => {
+  let wovenpay = SpiedWoven();
+  
+  it('Expect fetch function is callable, should fail 401', async () => {
+    let woven = new Woven();
+    const response = await woven.Customers.all();
+    expect(response.status).to.equal(401)
   }).timeout(0)
 })
