@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/wovenpay/wovenpay-node.svg?branch=master)](https://travis-ci.org/wovenpay/wovenpay-node)
 
-__** PLEASE NOTE THAT THIS LIBRARY IS UNDER ACTIVE DEVELOPMENT **__
+__Initial development. Anything may change at any time. The public API should not be considered stable.__
 
 __To maintain PCI DSS Compliance use the SDK with server side Node only__
 
