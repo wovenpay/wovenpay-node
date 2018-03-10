@@ -4,10 +4,7 @@
 
 __** PLEASE NOTE THAT THIS LIBRARY IS UNDER ACTIVE DEVELOPMENT **__
 
-__Only for use with server side Node__
-
-
-__The SD __
+__To maintain PCI DSS Compliance use the SDK with server side Node only__
 
 # USAGE
 
